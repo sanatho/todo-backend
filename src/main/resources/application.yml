@@ -1,0 +1,29 @@
+debug: true
+
+server:
+  port: 8080
+
+auth0:
+  # Replace with the API Identifier for your Auth0 API.
+  audience: http://localhost:8080/todo
+
+# The following is standard Spring Security OAuth2 configuration.
+spring:
+  security:
+    oauth2:
+      resourceserver:
+        jwt:
+          # Replace with the domain of your Auth0 tenant.
+          # Note the trailing slash is important!
+          issuer-uri: https://dev-x3ijybb7.us.auth0.com/
+
+    hibernate:
+      ddl-auto: create
+  datasource:
+    url: jdbc:mysql://localhost:3307/todo
+    username: root
+    password: root
+    driver-class-name: com.mysql.jdbc.Driver
+
+  flyway:
+    enabled: false

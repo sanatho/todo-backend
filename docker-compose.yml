@@ -1,0 +1,15 @@
+version: "3.1"
+services:
+  database:
+    image: mysql
+    ports:
+      - "3307:3306"
+    environment:
+      MYSQL_ROOT_PASSWORD: root
+      MYSQL_DATABASE: todo
+    restart: always
+    volumes:
+      - database_todo:/var/lib/mysql
+
+volumes:
+  database_todo:
