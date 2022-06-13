@@ -1,4 +1,4 @@
-debug: true
+#debug: true
 
 server:
   port: 8080
@@ -16,14 +16,12 @@ spring:
           # Replace with the domain of your Auth0 tenant.
           # Note the trailing slash is important!
           issuer-uri: https://dev-x3ijybb7.us.auth0.com/
-
-    hibernate:
-      ddl-auto: create
   datasource:
     url: jdbc:mysql://localhost:3307/todo
     username: root
     password: root
-    driver-class-name: com.mysql.jdbc.Driver
-
-  flyway:
-    enabled: false
+    driver-class-name: com.mysql.cj.jdbc.Driver
+  jpa:
+    hibernate:
+      ddl-auto: none
+    show-sql: true
