@@ -28,12 +28,17 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         This is where we configure the security required for our endpoints and setup our app to serve as
         an OAuth2 Resource Server, using JWT validation.
         */
-        http.authorizeRequests()
-                .mvcMatchers("/api/public").permitAll()
-                .mvcMatchers("/api/private").authenticated()
-                .mvcMatchers("/api/private-scoped").hasAuthority("SCOPE_read:messages")
-                .and().cors()
-                .and().oauth2ResourceServer().jwt();
+//        http.authorizeRequests()
+//                .antMatchers("/api/public").permitAll()
+//                .antMatchers("/api/todo/**").permitAll()
+//                .antMatchers("/api/todo").permitAll()
+//                .antMatchers("/api/private").authenticated()
+//                .antMatchers("/api/private-scoped").hasAuthority("SCOPE_read:messages")
+//                .and().cors()
+//                .and().oauth2ResourceServer().jwt();
+		http
+				.cors().and().csrf().disable()
+				.authorizeRequests().anyRequest().permitAll();
     }
 
     @Bean
