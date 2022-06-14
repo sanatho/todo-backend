@@ -1,5 +1,6 @@
 package com.thomas.todo.service;
 
+import com.thomas.todo.exception.ApiRequestException;
 import com.thomas.todo.model.Todo;
 import com.thomas.todo.repository.ToDoRepository;
 import lombok.RequiredArgsConstructor;
@@ -42,24 +43,35 @@ public class ToDoService {
 	/**
 	 * Metodo che cancella un ToDo
 	 * @param toDoId ID del ToDo da cancellare
+	 * @throws ApiRequestException ToDo inesistente
 	 */
 	public void deleteToDo(int toDoId){
-		// TODO Creare eccezione se non esiste id
-		log.info("ToDo {} is going to be deleted", toDoId);
-		repository.deleteById(toDoId);
+
+		Optional<Todo> todoOptional = repository.findById(toDoId);
+
+		if(todoOptional.isPresent()){
+			log.info("ToDo {} is going to be deleted", toDoId);
+			repository.deleteById(toDoId);
+		}else {
+			log.error("ToDo with id {} not exist", toDoId);
+			throw new ApiRequestException("ToDo " + toDoId +"ID not exist");
+		}
+
+
 	}
 
 	/**
 	 * Aggiorna un ToDo
-	 * @param id ToDo da aggiornare
+	 * @param toDoId ToDo da aggiornare
 	 * @param newToDo ToDo aggiornato
+	 * @throws ApiRequestException ToDo insistente
 	 */
-	public void updateById(int id, Todo newToDo){
-		Optional<Todo> oldToDoOptional = repository.findById(id);
+	public void updateById(int toDoId, Todo newToDo){
+		Optional<Todo> oldToDoOptional = repository.findById(toDoId);
 
 		if(!oldToDoOptional.isPresent()){
-			// TODO eccezione
-			log.error("ToDo with id {} not exist", id);
+			log.error("ToDo with toDoId {} not exist", toDoId);
+			throw new ApiRequestException("ToDo " + toDoId +"ID not exist");
 		}
 
 		Todo oldToDo = oldToDoOptional.get();
@@ -69,6 +81,6 @@ public class ToDoService {
 		oldToDo.setPriority(newToDo.getPriority());
 		repository.save(oldToDo);
 
-		log.info("ToDo with id {} updated", id);
+		log.info("ToDo with toDoId {} updated", toDoId);
 	}
 }
