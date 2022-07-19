@@ -1,15 +1,26 @@
 version: "3.1"
 services:
-  database:
-    image: mysql
-    ports:
-      - "3307:3306"
+
+  todo-backend:
+    image: thomas3004/todo-backend:latest
+    expose:
+      - 8080
+    depends_on:
+      - postgres
     environment:
-      MYSQL_ROOT_PASSWORD: root
-      MYSQL_DATABASE: todo
+      - SPRING_PROFILES_ACTIVE=docker
+  postgres:
+    image: postgres:alpine
+    ports:
+      - "5432:5432"
+    environment:
+      POSTGRES_USER: root
+      POSTGRES_PASSWORD: root
+      POSTGRES_DB: todo
     restart: always
+    hostname: postgres
     volumes:
-      - database_todo:/var/lib/mysql
+      - database_todo:/var/lib/postgresql
 
 volumes:
   database_todo:
