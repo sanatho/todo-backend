@@ -10,7 +10,7 @@ import java.util.UUID;
 
 @RestController
 @RequiredArgsConstructor
-@RequestMapping("/api/todo")
+@RequestMapping("/api/v1/todo")
 @CrossOrigin("*")
 public class ToDoController {
 	private final ToDoService service;
